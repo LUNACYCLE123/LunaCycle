@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LunaCycle Calendar</title>
+    <style>
+        body {
+            font-family: system-ui;
+            margin: 0;
+            padding: 0;
+            /* Updated to 3-way gradient */
+            background: linear-gradient(to bottom right, #FFB8DE, #FF74D4 50%, #642CA9);
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #FF36AB;
+            padding: 10px 0;
+        }
+        .navbar button {
+            background-color: transparent;
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+        }
+        .navbar button:hover {
+            background-color: #FF74D4;
+            border-radius: 5px;
+        }
+        .calendar {
+            background-color: #FFFFFF;
+            border-radius: 20px;
+            margin: 20px auto;
+            padding: 20px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .calendar h2 {
+            color: #642CA9;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .calendar-day {
+            background-color: #FFF7F7;
+            color: #FF36AB;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+        .calendar-day.header {
+            background-color: #FF36AB;
+            color: #FFFFFF;
+        }
+        .calendar-day.start {
+            background-color: #FF74D4 !important;
+            color: #FFFFFF !important;
+        }
+        .calendar-day.end {
+            background-color: #642CA9 !important;
+            color: #FFFFFF !important;
+        }
+        .calendar-day.today {
+            background-color: #FF74D4 !important;
+            color: #FFFFFF !important;
+        }
+        /* Record Menstruation Section */
+        .record-section {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+            margin: 20px auto;
+            padding: 30px 20px 20px 20px;
+            width: 90%;
+            max-width: 1500px;
+            text-align: center;
+        }
+        .record-section h3 {
+            color: #642CA9;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .record-section input[type="number"] {
+            border: 2px solid #642CA9; /* purple border */
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin: 8px 6px;
+            font-size: 16px;
+            width: 150px;
+            outline: none;
+            background: #FFFFFF;
+            color: #FF74D4;
+        }
+        .record-section input[type="number"]::placeholder {
+            color: #FF74D4;
+            opacity: 1;
+        }
+        .record-section button {
+            background: #FF74D4;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 18px;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 8px 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .record-section button:hover {
+            background: #FF36AB;
+        }
+        /* Make "Record Today" button purple and "Reset Calendar" button red */
+        #record-today-btn {
+            background: #642CA9;
+        }
+        #record-today-btn:hover {
+            background: #4b1e7a;
+        }
+        #reset-calendar-btn {
+            background: #FF3B3B;
+        }
+        #reset-calendar-btn:hover {
+            background: #b71c1c;
+        }
+        /* My Previous Cycles Section */
+        .cycle-tracker {
+            background-color: #FFFFFF;
+            border-radius: 20px;
+            margin: 20px auto;
+            padding: 30px 20px 20px 20px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .cycle-tracker h2 {
+            color: #642CA9;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .cycle-table {
+            width: 100%;
+            margin: 0 auto;
+        }
+        .cycle-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        .cycle-label {
+            color: #642CA9;
+            font-weight: bold;
+            min-width: 150px;
+            text-align: right;
+            margin-right: 10px;
+        }
+        .cycle-value {
+            color: #642CA9;
+            min-width: 70px;
+            text-align: left;
+            margin-right: 20px;
+        }
+        .cycle-status {
+            font-weight: bold;
+            min-width: 80px;
+            text-align: left;
+        }
+        .cycle-status.red {
+            color: #FF0000;
+        }
+        .cycle-status.green {
+            color: #1DB954;
+        }
+        .cycle-status.yellow {
+            color: #FFD600;
+        }
+        .cycle-status.gray {
+            color: #888;
+        }
+        @media (max-width: 600px) {
+            .calendar, .record-section, .cycle-tracker {
+                padding: 15px 5px;
+                max-width: 98%;
+            }
+            .cycle-label, .cycle-value, .cycle-status {
+                font-size: 14px;
+                min-width: unset;
+                margin-right: 6px;
+            }
+        }
+        /* Add at the end of your <style> block */
+        .cycle-pink {
+            color: #FF74D4 !important;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        function generateCalendar() {
+            const calendarGrid = document.querySelector('.calendar-grid');
+            const calendarTitle = document.querySelector('.calendar h2');
+            const currentDate = new Date();
+            const currentMonth = currentDate.getMonth();
+            const currentYear = currentDate.getFullYear();
+
+            // Month names
+            const monthNames = [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ];
+
+            // Set the calendar title to the current month
+            calendarTitle.textContent = monthNames[currentMonth];
+
+            // Get the first day of the month
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+
+            // Get the number of days in the month
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+            // Days of the week
+            const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+            // Add day headers
+            daysOfWeek.forEach(day => {
+                const dayHeader = document.createElement('div');
+                dayHeader.classList.add('calendar-day', 'header');
+                dayHeader.textContent = day;
+                calendarGrid.appendChild(dayHeader);
+            });
+
+            // Add blank days for the first week
+            for (let i = 0; i < firstDay; i++) {
+                const blankDay = document.createElement('div');
+                blankDay.classList.add('calendar-day');
+                calendarGrid.appendChild(blankDay);
+            }
+
+            // Add days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.classList.add('calendar-day');
+                dayElement.textContent = day;
+
+                // Highlight today
+                if (day === currentDate.getDate()) {
+                    dayElement.classList.add('today');
+                }
+
+                calendarGrid.appendChild(dayElement);
+            }
+        }
+
+        function saveCalendarState() {
+            const calendarDays = document.querySelectorAll('.calendar-day:not(.header)');
+            const state = Array.from(calendarDays).map(day => ({
+                classes: Array.from(day.classList),
+                text: day.textContent
+            }));
+            localStorage.setItem('calendarState', JSON.stringify(state));
+        }
+
+        function loadCalendarState() {
+            const savedState = localStorage.getItem('calendarState');
+            if (savedState) {
+                const calendarDays = document.querySelectorAll('.calendar-day:not(.header)');
+                const state = JSON.parse(savedState);
+
+                state.forEach((dayState, index) => {
+                    if (calendarDays[index]) {
+                        calendarDays[index].className = 'calendar-day'; // Reset classes
+                        dayState.classes.forEach(cls => calendarDays[index].classList.add(cls));
+                        calendarDays[index].textContent = dayState.text;
+                    }
+                });
+            }
+        }
+
+        function recordMenstruationStart() {
+            const startDate = parseInt(document.getElementById('start-date').value);
+            if (isNaN(startDate)) return alert('Please enter a valid date.');
+
+            const calendarDays = document.querySelectorAll('.calendar-day:not(.header)');
+            const firstDayOffset = new Date(new Date().getFullYear(), new Date().getMonth(), 1).getDay(); // Offset for blank days
+
+            if (startDate > 0 && startDate <= calendarDays.length - firstDayOffset) {
+                calendarDays[startDate + firstDayOffset - 1].classList.add('start');
+
+                // Highlight 7 days after the start date
+                if (startDate + 6 <= calendarDays.length - firstDayOffset) {
+                    calendarDays[startDate + firstDayOffset + 6 - 1].classList.add('end');
+                }
+
+                saveCalendarState(); // Save state after recording
+            }
+        }
+
+        function recordToday() {
+            const currentDate = new Date().getDate();
+            const calendarDays = document.querySelectorAll('.calendar-day:not(.header)');
+            const firstDayOffset = new Date(new Date().getFullYear(), new Date().getMonth(), 1).getDay(); // Offset for blank days
+
+            calendarDays[currentDate + firstDayOffset - 1].classList.add('today');
+            saveCalendarState(); // Save state after recording
+        }
+
+        function recordCustomDate() {
+            const customDate = parseInt(document.getElementById('custom-date').value);
+            if (isNaN(customDate)) return alert('Please enter a valid date.');
+
+            const calendarDays = document.querySelectorAll('.calendar-day:not(.header)');
+            const firstDayOffset = new Date(new Date().getFullYear(), new Date().getMonth(), 1).getDay(); // Offset for blank days
+
+            // Calculate the expected end date
+            const startDate = parseInt(document.getElementById('start-date').value);
+            const expectedEndDate = startDate + 6; // 7 days after the start date
+
+            if (customDate > 0 && customDate <= calendarDays.length - firstDayOffset) {
+                calendarDays[customDate + firstDayOffset - 1].classList.add('today');
+
+                // Check if the custom date is after the expected end date
+                if (customDate > expectedEndDate) {
+                    alert('Warning: You are experiencing an abnormal period.');
+                }
+
+                saveCalendarState(); // Save state after recording
+            }
+        }
+
+        function resetCalendar() {
+            if (confirm('Are you sure you want to reset all entries for this month? This action cannot be undone.')) {
+                const calendarDays = document.querySelectorAll('.calendar-day:not(.header)');
+                calendarDays.forEach(day => {
+                    day.classList.remove('start', 'end', 'today');
+                });
+
+                localStorage.removeItem('calendarState'); // Clear saved state
+            }
+        }
+
+        function calculateDaysAgo() {
+            const lastPeriodDate = new Date(2025, 3, 25); // April 25, 2025 (Month is 0-indexed)
+            const currentDate = new Date();
+            const timeDifference = currentDate - lastPeriodDate;
+            const daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+            document.getElementById('days-ago').textContent = `${daysAgo} days ago`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            generateCalendar();
+            loadCalendarState(); // Load saved state on page load
+            calculateDaysAgo();
+        });
+    </script>
+</head>
+<body>
+    <div class="navbar">
+        <button onclick="location.href='home.html'">Home</button>
+        <button onclick="location.href='cycle-calendar.html'">Cycle Calendar</button>
+        <button onclick="location.href='leaderboards.html'">Leaderboards</button>
+        <button onclick="location.href='social.html'">Social</button>
+        <button onclick="location.href='profile.html'">Profile</button>
+    </div>
+    <div class="calendar">
+        <h2>Calendar</h2>
+        <div class="calendar-grid"></div>
+    </div>
+    <div class="record-section">
+        <h3>Record Menstruation</h3>
+        <input type="number" id="start-date" placeholder="Enter start date">
+        <button id="record-start-btn" onclick="recordMenstruationStart()">Record Start</button>
+        <button id="record-today-btn" onclick="recordToday()">Record Today</button>
+        <input type="number" id="custom-date" placeholder="Enter custom date">
+        <button id="record-custom-btn" onclick="recordCustomDate()">Record Custom Date</button>
+        <button id="reset-calendar-btn" onclick="resetCalendar()">Reset Calendar</button>
+    </div>
+    <div class="cycle-tracker">
+        <h2>My Previous Cycles</h2>
+        <div class="cycle-table">
+            <div class="cycle-row">
+                <span class="cycle-label">Last Period:</span>
+                <span class="cycle-value">
+                    <span class="cycle-pink">April 25, 2025</span>
+                    (<span id="days-ago" class="cycle-pink"></span>)
+                </span>
+            </div>
+            <div class="cycle-row">
+                <span class="cycle-label">Previous Cycle Length:</span>
+                <span class="cycle-value">
+                    <span class="cycle-pink">37 days</span>
+                </span>
+                <span class="cycle-status red">ABNORMAL</span>
+            </div>
+            <div class="cycle-row">
+                <span class="cycle-label">Previous Period Length:</span>
+                <span class="cycle-value">
+                    <span class="cycle-pink">5 days</span>
+                </span>
+                <span class="cycle-status green">REGULAR</span>
+            </div>
+            <div class="cycle-row">
+                <span class="cycle-label">Cycle Length Variation:</span>
+                <span class="cycle-value">
+                    <span class="cycle-pink">26-37 days</span>
+                </span>
+                <span class="cycle-status yellow">IRREGULAR</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

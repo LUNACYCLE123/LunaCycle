@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            font-family: system-ui;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #FFB8DE, #FF74D4 50%, #642CA9);
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #FF36AB;
+            padding: 10px 0;
+        }
+        .navbar button {
+            background-color: transparent;
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+        }
+        .navbar button:hover {
+            background-color: #FF74D4;
+            border-radius: 5px;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .tab {
+            background-color: #FFFFFF;
+            color: #FF36AB;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 2px solid #FF36AB;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+        .tab:hover {
+            background-color: #FF36AB;
+            color: #FFFFFF;
+        }
+        .tab.active {
+            background-color: #FF36AB;
+            color: #FFFFFF;
+        }
+        .main-content {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .friends-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .friend-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #FFFFFF;
+            color: #FF36AB;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px;
+            border: 2px solid #FF36AB;
+            border-radius: 10px;
+            width: 300px;
+            margin-bottom: 10px;
+        }
+        .friend-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <button onclick="location.href='home.html'">Home</button>
+        <button onclick="location.href='cycle-calendar.html'">Cycle Calendar</button>
+        <button onclick="location.href='leaderboards.html'">Leaderboards</button>
+        <button onclick="location.href='social.html'">Social</button>
+        <button onclick="location.href='profile.html'">Profile</button>
+    </div>
+    <div class="tabs">
+        <div class="tab active" onclick="location.href='social.html'">Friends</div>
+        <div class="tab" onclick="location.href='search-friends.html'">Add Friends</div>
+    </div>
+    <div class="main-content">
+        <div class="friends-list">
+            <div class="friend-item">
+                <img src="Pictures/friend 1.jpg" alt="Friend 1">
+                <div>Mizi</div>
+            </div>
+            <div class="friend-item">
+                <img src="Pictures/friend 2.jpg" alt="Friend 2">
+                <div>Phoebe</div>
+            </div>
+            <div class="friend-item">
+                <img src="Pictures/friend 3.jpg" alt="Friend 3">
+                <div>DK</div>
+            </div>
+            <div class="friend-item">
+                <img src="Pictures/friend 4.jpg" alt="Friend 4">
+                <div>Mitsuki</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

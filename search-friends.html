@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Friends</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            font-family: system-ui;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #FFB8DE, #FF74D4 50%, #642CA9); /* 3-way gradient */
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #FF36AB;
+            padding: 10px 0;
+        }
+        .navbar button {
+            background-color: transparent;
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+        }
+        .navbar button:hover {
+            background-color: #FF74D4;
+            border-radius: 5px;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .tab {
+            background-color: #FFFFFF;
+            color: #FF36AB;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 2px solid #FF36AB;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+        .tab:hover {
+            background-color: #FF36AB;
+            color: #FFFFFF;
+        }
+        .tab.active {
+            background-color: #FF36AB;
+            color: #FFFFFF;
+        }
+        .search-bar {
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+        }
+        .search-bar input {
+            width: 300px;
+            height: 40px;
+            border: 2px solid #FF74D4;
+            border-radius: 10px;
+            padding: 5px 10px;
+            font-size: 16px;
+        }
+        .main-content {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .people-list {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .person-item {
+            display: flex;
+            align-items: center;
+            background-color: #FFFFFF;
+            color: #FF36AB;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px;
+            border: 2px solid #FF36AB;
+            border-radius: 10px;
+            width: 300px;
+            margin-bottom: 10px;
+            justify-content: space-between;
+        }
+        .person-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .add-button {
+            background-color: #FF36AB;
+            color: #FFFFFF;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .add-button:hover {
+            background-color: #FF74D4;
+        }
+        .add-button.sent {
+            background-color: #CCCCCC;
+            cursor: default;
+        }
+    </style>
+    <script>
+        function sendRequest(button, friendName) {
+            button.textContent = "Request Sent";
+            button.classList.add("sent");
+            button.disabled = true;
+
+            // Save the request state to sessionStorage
+            const sentRequests = JSON.parse(sessionStorage.getItem("sentRequests")) || [];
+            if (!sentRequests.includes(friendName)) {
+                sentRequests.push(friendName);
+                sessionStorage.setItem("sentRequests", JSON.stringify(sentRequests));
+            }
+        }
+
+        function loadSentRequests() {
+            const sentRequests = JSON.parse(sessionStorage.getItem("sentRequests")) || [];
+            const personItems = document.querySelectorAll(".person-item");
+
+            personItems.forEach(item => {
+                // Find the name in the .person-name div (after you update the HTML as in the previous answer)
+                let friendName = "";
+                const nameDiv = item.querySelector(".person-name");
+                if (nameDiv) {
+                    friendName = nameDiv.textContent.trim();
+                } else {
+                    // fallback for old structure
+                    friendName = item.querySelector("div").textContent.trim();
+                }
+                const button = item.querySelector(".add-button");
+
+                if (sentRequests.includes(friendName)) {
+                    button.textContent = "Request Sent";
+                    button.classList.add("sent");
+                    button.disabled = true;
+                } else {
+                    button.textContent = "Add Friend";
+                    button.classList.remove("sent");
+                    button.disabled = false;
+                }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", loadSentRequests);
+    </script>
+</head>
+<body>
+    <div class="navbar">
+        <button onclick="location.href='home.html'">Home</button>
+        <button onclick="location.href='cycle-calendar.html'">Cycle Calendar</button>
+        <button onclick="location.href='leaderboards.html'">Leaderboards</button>
+        <button onclick="location.href='social.html'">Social</button>
+        <button onclick="location.href='profile.html'">Profile</button>
+    </div>
+    <div class="tabs">
+        <div class="tab" onclick="location.href='social.html'">Friends</div>
+        <div class="tab active" onclick="location.href='search-friends.html'">Add Friends</div>
+    </div>
+    <div class="main-content">
+        <div class="search-bar">
+            <input type="text" placeholder="Search for friends...">
+        </div>
+        <div class="people-list">
+            <div class="person-item">
+                <div class="person-name">
+                    <img src="Pictures/stranger1.jpeg" alt="Erin">
+                    Erin
+                </div>
+                <button class="add-button" onclick="sendRequest(this, 'Erin')">Add Friend</button>
+            </div>
+            <div class="person-item">
+                <div class="person-name">
+                    <img src="Pictures/stranger2.jpeg" alt="Mike">
+                    Mike
+                </div>
+                <button class="add-button" onclick="sendRequest(this, 'Mike')">Add Friend</button>
+            </div>
+            <div class="person-item">
+                <div class="person-name">
+                    <img src="Pictures/stranger3.jpeg" alt="Todd">
+                    Todd
+                </div>
+                <button class="add-button" onclick="sendRequest(this, 'Todd')">Add Friend</button>
+            </div>
+            <div class="person-item">
+                <div class="person-name">
+                    <img src="Pictures/stranger4.jpeg" alt="Kyle">
+                    Kyle
+                </div>
+                <button class="add-button" onclick="sendRequest(this, 'Kyle')">Add Friend</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

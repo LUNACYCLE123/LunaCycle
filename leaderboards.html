@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboards</title>
+    <style>
+        html, body {
+            height: 100%;
+            min-height: 100vh;
+        }
+        body {
+            min-height: 100vh;
+            height: 100%;
+            width: 100vw;
+            background: linear-gradient(to bottom right, #FFB8DE, #FF74D4 50%, #642CA9);
+            background-attachment: fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #FF36AB;
+            padding: 10px 0;
+        }
+        .navbar button {
+            background-color: transparent;
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+        }
+        .navbar button:hover {
+            background-color: #FF74D4;
+            border-radius: 5px;
+        }
+        .leaderboards-title {
+            text-align: center;
+            color: #642CA9;
+            font-size: 36px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .top-three {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .top-three .person {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .top-three .person img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            border: 3px solid #FF36AB; /* Added pink border */
+        }
+        .top-three .person .name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #FF36AB;
+        }
+        .top-three .person .points {
+            font-size: 14px;
+            color: #642CA9;
+        }
+        .leaderboard-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            background-color: #FFFFFF;
+            padding: 10px 20px;
+            border-radius: 10px;
+            width: 300px;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .leaderboard-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 2px solid #FF36AB; /* Added pink border */
+        }
+        .leaderboard-item .name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #FF36AB;
+        }
+        .leaderboard-item .points {
+            font-size: 14px;
+            color: #642CA9;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <button onclick="location.href='home.html'">Home</button>
+        <button onclick="location.href='cycle-calendar.html'">Cycle Calendar</button>
+        <button onclick="location.href='leaderboards.html'">Leaderboards</button>
+        <button onclick="location.href='social.html'">Social</button>
+        <button onclick="location.href='profile.html'">Profile</button>
+    </div>
+    <div class="leaderboards-title">Leaderboards</div>
+    <div class="top-three">
+        <div class="person">
+            <img src= "Pictures/friend 1.jpg" alt="1st Place">
+            <div class="name">Mizi</div>
+            <div class="points">120 Points</div>
+        </div>
+        <div class="person">
+            <img src="Pictures/friend 2.jpg" alt="2nd Place">
+            <div class="name">Phoebe</div>
+            <div class="points">110 Points</div>
+        </div>
+        <div class="person">
+            <img src="Pictures/userprofile.jpg" alt="3rd Place">
+            <div class="name">You</div>
+            <div class="points">100 Points</div>
+        </div>
+    </div>
+    <div class="leaderboard-list">
+        <div class="leaderboard-item">
+            <img src="Pictures/friend 3.jpg" alt="4th Place">
+            <div class="name">DK</div>
+            <div class="points">90 Points</div>
+        </div>
+        <div class="leaderboard-item">
+            <img src= "Pictures/friend 4.jpg" alt="5th Place">
+            <div class="name">Mitsuki</div>
+            <div class="points">80 Points</div>
+        </div>
+        <div class="leaderboard-item">
+            <img src="Pictures/friend 5.jpg" alt="6th Place">
+            <div class="name">Alex</div>
+            <div class="points">70 Points</div>
+        </div>
+        <div class="leaderboard-item">
+            <img src="Pictures/friend 6.jpg" alt="7th Place">
+            <div class="name">Taylor</div>
+            <div class="points">60 Points</div>
+        </div>
+    </div>
+</body>
+</html>

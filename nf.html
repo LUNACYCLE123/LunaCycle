@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+    <style>
+        body {
+            font-family: system-ui;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, #FFB8DE, #FF74D4 50%, #642CA9); /* 3-way gradient */
+            color: #642CA9;
+            min-height: 100vh; /* Ensure gradient covers the full height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #FF36AB;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .toggle-button, .back-button {
+            background-color: #FF36AB;
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .toggle-button:hover, .back-button:hover {
+            background-color: #FF74D4;
+        }
+    </style>
+    <script>
+        let notificationsEnabled = sessionStorage.getItem('notificationsEnabled') === 'true';
+
+        function toggleNotifications() {
+            const toggleButton = document.getElementById('toggle-button');
+            const statusText = document.getElementById('status-text');
+
+            if (notificationsEnabled) {
+                const confirmDisable = confirm('Are you sure you wish to disable notifications?');
+                if (confirmDisable) {
+                    notificationsEnabled = false;
+                    sessionStorage.setItem('notificationsEnabled', 'false'); // Save to sessionStorage
+                    statusText.textContent = 'Notifications are OFF';
+                    toggleButton.textContent = 'Enable Notifications';
+                }
+            } else {
+                const confirmEnable = confirm('Are you sure you wish to enable notifications?');
+                if (confirmEnable) {
+                    notificationsEnabled = true;
+                    sessionStorage.setItem('notificationsEnabled', 'true'); // Save to sessionStorage
+                    statusText.textContent = 'Notifications are ON';
+                    toggleButton.textContent = 'Disable Notifications';
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const statusText = document.getElementById('status-text');
+            const toggleButton = document.getElementById('toggle-button');
+
+            if (notificationsEnabled) {
+                statusText.textContent = 'Notifications are ON';
+                toggleButton.textContent = 'Disable Notifications';
+            } else {
+                statusText.textContent = 'Notifications are OFF';
+                toggleButton.textContent = 'Enable Notifications';
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Notifications</h1>
+        <p id="status-text">Notifications are ON</p>
+        <button id="toggle-button" class="toggle-button" onclick="toggleNotifications()">Disable Notifications</button>
+        <button class="back-button" onclick="location.href='settings.html'">Back to Settings</button>
+    </div>
+</body>
+</html>

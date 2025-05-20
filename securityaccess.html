@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security and Access</title>
+    <style>
+        body {
+            font-family: system-ui;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, #FFB8DE, #FF74D4 50%, #642CA9); /* 3-way gradient */
+            color: #642CA9;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            text-align: center;
+            color: #FF36AB;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 90%; /* Reduced width to center the input box */
+            margin: 0 auto; /* Center the input box */
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #FF74D4;
+            border-radius: 5px;
+            background-color: #FFDDE1; /* Pink background */
+            color: #642CA9; /* Purple font color */
+            display: block; /* Ensure the input box is treated as a block element */
+        }
+        .form-group input::placeholder {
+            color: #642CA9; /* Purple font color for placeholder text */
+        }
+        .toggle-password {
+            position: absolute;
+            bottom: -20px; /* Position below the input box */
+            right: 10%; /* Adjusted to align with the smaller input box */
+            font-size: 14px;
+            color: #FF36AB;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .save-button {
+            display: block;
+            margin: 60px auto 20px; /* Increased top margin to move the button lower */
+            background-color: #FF36AB;
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .save-button:hover {
+            background-color: #FF74D4;
+        }
+        .back-button {
+            display: block;
+            margin: 20px auto; /* Added consistent spacing between buttons */
+            background-color: #FF36AB;
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .back-button:hover {
+            background-color: #FF74D4;
+        }
+    </style>
+    <script>
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('password');
+            const toggleText = document.getElementById('toggle-password');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleText.textContent = 'Hide Password';
+            } else {
+                passwordField.type = 'password';
+                toggleText.textContent = 'Show Password';
+            }
+        }
+
+        function toggleEditMode() {
+            const usernameField = document.getElementById('username');
+            const passwordField = document.getElementById('password');
+            const toggleButton = document.getElementById('toggle-edit');
+
+            if (toggleButton.textContent === 'Change Account Details') {
+                usernameField.disabled = false;
+                passwordField.disabled = false;
+                toggleButton.textContent = 'Save Changes';
+            } else {
+                usernameField.disabled = true;
+                passwordField.disabled = true;
+
+                // Save to sessionStorage
+                sessionStorage.setItem('username', usernameField.value);
+                sessionStorage.setItem('password', passwordField.value);
+
+                alert(`Changes saved!\nUsername: ${usernameField.value}`);
+                toggleButton.textContent = 'Change Account Details';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedUsername = sessionStorage.getItem('username');
+            const savedPassword = sessionStorage.getItem('password');
+
+            if (savedUsername) {
+                document.getElementById('username').value = savedUsername;
+            }
+            if (savedPassword) {
+                document.getElementById('password').value = savedPassword;
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Security and Access</h1>
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" value="Giselle Kim" disabled>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" value="LunaCycle123" disabled>
+            <span id="toggle-password" class="toggle-password" onclick="togglePasswordVisibility()">Show Password</span>
+        </div>
+        <button id="toggle-edit" class="save-button" onclick="toggleEditMode()">Change Account Details</button>
+        <button class="back-button" onclick="location.href='settings.html'">Back to Settings</button>
+    </div>
+</body>
+</html>

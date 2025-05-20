@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LunaCycle Settings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: system-ui;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, #FFB8DE, #FF74D4 50%, #642CA9); /* 3-way gradient */
+            color: #642CA9;
+            min-height: 100vh; /* Ensure gradient covers the full height */
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #FF36AB;
+            padding: 10px 0;
+        }
+        .navbar button {
+            background-color: transparent;
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+        }
+        .navbar button:hover {
+            background-color: #FF74D4;
+            border-radius: 5px;
+        }
+        .settings-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            padding: 20px;
+        }
+        .settings-button {
+            background-color: #FFFFFF;
+            color: #FF36AB;
+            font-size: 18px; /* Slightly increased font size */
+            font-weight: bold;
+            padding: 15px 25px; /* Increased padding */
+            border: none; /* Removed pink outline */
+            border-radius: 10px;
+            cursor: pointer;
+            width: 320px; /* Slightly increased width */
+            margin-bottom: 20px; /* Increased margin for better spacing */
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(255, 54, 171, 0.5); /* Added pink shadow */
+        }
+        .settings-button:hover {
+            background-color: #FF36AB;
+            color: #FFFFFF;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <button onclick="location.href='home.html'">Home</button>
+        <button onclick="location.href='cycle-calendar.html'">Cycle Calendar</button>
+        <button onclick="location.href='leaderboards.html'">Leaderboards</button>
+        <button onclick="location.href='social.html'">Social</button>
+        <button onclick="location.href='profile.html'">Profile</button>
+    </div>
+    <div class="settings-container">
+        <button class="settings-button" onclick="location.href='privacysafety.html'">Privacy and Safety</button>
+        <button class="settings-button" onclick="location.href='securityaccess.html'">Security and Account Access</button>
+        <button class="settings-button" onclick="location.href='nf.html'">Notifications</button>
+        <button class="settings-button" onclick="location.href='termspolicies.html'">Terms and Policies</button>
+        <button class="settings-button" onclick="location.href='helpsupport.html'">Help and Support</button>
+        <button class="settings-button" onclick="location.href='index.html'">Log Out</button>
+    </div>
+</body>
+</html>
